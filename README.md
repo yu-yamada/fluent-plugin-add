@@ -1,24 +1,26 @@
-# Fluent::Plugin::Add
+# fluent-plugin-add 
 
-TODO: Write a gem description
 
 ## Installation
 
-Add this line to your application's Gemfile:
 
-    gem 'fluent-plugin-add'
+    gem install fluent-plugin-add
 
-And then execute:
+## Configration
+  <match test.**>
+    type add
+    add_tag_prefix debug
+    <pair>
+      hoge moge
+    </pair>
+  </match>
 
-    $ bundle
 
-Or install it yourself as:
+### Assuming following inputs are coming:
+test.aa: {"json":"dayo"}
+### then output bocomes as belows
+debug.test.aa: {"json":"dayo", "hoge":"moge"}
 
-    $ gem install fluent-plugin-add
-
-## Usage
-
-TODO: Write usage instructions here
 
 ## Contributing
 
@@ -27,3 +29,6 @@ TODO: Write usage instructions here
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Copyright
+Copyright (c) 2013 yu-yamada
