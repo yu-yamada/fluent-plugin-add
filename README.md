@@ -7,6 +7,7 @@
     gem install fluent-plugin-add
 
 ## Configration
+
   <match test.**>
     type add
     add_tag_prefix debug
