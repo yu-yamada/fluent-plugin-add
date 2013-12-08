@@ -8,13 +8,13 @@
 
 ## Configration
 
-  <match test.**>
-    type add
-    add_tag_prefix debug
-    <pair>
-      hoge moge
-    </pair>
-  </match>
+    <match test.**>
+      type add
+      add_tag_prefix debug
+      <pair>
+        hoge moge
+      </pair>
+    </match>
 
 
 ### Assuming following inputs are coming:
