@@ -18,9 +18,9 @@
 
 
 ### Assuming following inputs are coming:
-test.aa: {"json":"dayo"}
+    test.aa: {"json":"dayo"}
 ### then output bocomes as belows
-debug.test.aa: {"json":"dayo", "hoge":"moge"}
+    debug.test.aa: {"json":"dayo", "hoge":"moge"}
 
 
 ## Contributing
@@ -32,4 +32,4 @@ debug.test.aa: {"json":"dayo", "hoge":"moge"}
 5. Create new Pull Request
 
 ## Copyright
-Copyright (c) 2013 yu-yamada
+    Copyright (c) 2013 yu-yamada
