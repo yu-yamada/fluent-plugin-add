@@ -13,8 +13,8 @@ class Fluent::AddOutput < Fluent::Output
   def configure(conf)
     super
 
-    @key = @key.to_s
-    @value = @value.to_s 
+    # @key = @key.to_s
+    # @value = @value.to_s 
     @tag_prefix = "#{@add_tag_prefix}."
     @add_hash = Hash.new
 
@@ -37,7 +37,7 @@ class Fluent::AddOutput < Fluent::Output
     emit_tag = @tag_proc.call(tag)
 
     es.each do |time,record|
-      record[@key] = @value
+      # record[@key] = @value
       @add_hash.each do |k,v|
         record[k] = v
       end
