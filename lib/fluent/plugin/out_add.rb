@@ -2,8 +2,6 @@ require 'pp'
 class Fluent::AddOutput < Fluent::Output
   Fluent::Plugin.register_output('add', self)
 
-  config_param :key, :string
-  config_param :value, :string, :default => nil
   config_param :add_tag_prefix, :string, :default => 'greped'
 
   def initialize
