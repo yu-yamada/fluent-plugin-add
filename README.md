@@ -13,6 +13,7 @@
       add_tag_prefix debug
       <pair>
         hoge moge
+        hogehoge mogemoge
       </pair>
     </match>
 
@@ -20,7 +21,7 @@
 ### Assuming following inputs are coming:
     test.aa: {"json":"dayo"}
 ### then output bocomes as belows
-    debug.test.aa: {"json":"dayo", "hoge":"moge"}
+    debug.test.aa: {"json":"dayo", "hoge":"moge","hogehoge":"mogemoge"}
 
 
 ## Contributing

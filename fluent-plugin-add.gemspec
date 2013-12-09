@@ -5,11 +5,11 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "fluent-plugin-add"
-  spec.version       = "0.0.1" 
+  spec.version       = "0.0.3" 
   spec.authors       = ["yu yamada"]
-  spec.email         = ["yu.yamada@outlook.com"]
-  spec.description   = %q{Output filter plugin to count messages that matches specified conditions} 
-  spec.summary       =  %q{Output filter plugin to count messages that matches specified conditions} 
+  spec.email         = ["yu.yamada07@gmail.com"]
+  spec.description   = %q{Output filter plugin to add messages} 
+  spec.summary       =  %q{Output filter plugin to add messages} 
   spec.homepage      = "https://github.com/yu-yamada/fluent-plugin-add"
   spec.license       = "MIT"
 
