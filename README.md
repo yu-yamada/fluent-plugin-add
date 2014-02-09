@@ -1,4 +1,4 @@
-# fluent-plugin-add 
+# fluent-plugin-add, a plugin for [Fluentd](http://fluentd.org) 
 
 
 ## Installation
