@@ -35,7 +35,7 @@ class Fluent::AddOutput < Fluent::Output
       @add_hash.each do |k,v|
         record[k] = v
       end
-      Fluent::Engine.emit(emit_tag, time, record)
+      router.emit(emit_tag, time, record)
     end
 
     chain.next
