@@ -1,6 +1,11 @@
 class Fluent::AddOutput < Fluent::Output
   Fluent::Plugin.register_output('add', self)
 
+   # Define `router` method of v0.12 to support v0.10.57 or earlier
+  unless method_defined?(:router)
+    define_method("router") { Fluent::Engine }
+  end
+
   config_param :add_tag_prefix, :string, :default => 'greped'
 
   def initialize
