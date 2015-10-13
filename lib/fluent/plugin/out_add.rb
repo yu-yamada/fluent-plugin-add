@@ -1,6 +1,11 @@
 class Fluent::AddOutput < Fluent::Output
   Fluent::Plugin.register_output('add', self)
 
+   # Define `router` method of v0.12 to support v0.10.57 or earlier
+  unless method_defined?(:router)
+    define_method("router") { Fluent::Engine }
+  end
+
   config_param :add_tag_prefix, :string, :default => 'greped'
 
   def initialize
@@ -35,7 +40,7 @@ class Fluent::AddOutput < Fluent::Output
       @add_hash.each do |k,v|
         record[k] = v
       end
-      Fluent::Engine.emit(emit_tag, time, record)
+      router.emit(emit_tag, time, record)
     end
 
     chain.next
