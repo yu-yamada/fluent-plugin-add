@@ -8,6 +8,8 @@
 
 ## Configration
 
+### AddOutput
+
     <match test.**>
       type add
       add_tag_prefix debug
@@ -23,6 +25,21 @@
 ### then output bocomes as belows
     debug.test.aa: {"json":"dayo", "hoge":"moge","hogehoge":"mogemoge"}
 
+### AddFilter
+
+    <filter test.**>
+      type add
+      <pair>
+        hoge moge
+        hogehoge mogemoge
+      </pair>
+    </filter>
+
+
+### Assuming following inputs are coming:
+    test.aa: {"json":"dayo"}
+### then output bocomes as belows
+    debug.test.aa: {"json":"dayo", "hoge":"moge","hogehoge":"mogemoge"}
 
 ## Contributing
 

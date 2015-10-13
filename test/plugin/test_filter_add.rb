@@ -25,7 +25,7 @@ class AddFilterTest < Test::Unit::TestCase
 
     time = Time.parse("2011-01-02 13:14:15 UTC").to_i
     d.run do
-      d.emit("a" => 1)
+      d.filter("a" => 1)
     end
     mapped = {'hoge' => 'moge', 'hogehoge' => 'mogemoge'}
     expect = {"a" => 1}.merge(mapped)
