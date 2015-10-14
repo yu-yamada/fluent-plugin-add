@@ -2,6 +2,8 @@ require 'helper'
 
 class AddFilterTest < Test::Unit::TestCase
   def setup
+    omit("Use Fluentd v0.12 or later.") unless defined?(Fluent::Filter)
+
     Fluent::Test.setup
   end
 

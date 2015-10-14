@@ -25,4 +25,4 @@ class Fluent::AddFilter < Fluent::Filter
     end
     record
   end
-end
+end if defined?(Fluent::Filter)
