@@ -23,6 +23,7 @@ unless ENV.has_key?('VERBOSE')
 end
 
 require 'fluent/plugin/out_add'
+require 'fluent/plugin/filter_add'
 
 class Test::Unit::TestCase
 end
