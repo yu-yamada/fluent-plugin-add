@@ -1,6 +1,8 @@
 # fluent-plugin-add, a plugin for [Fluentd](http://fluentd.org) 
 [![Build Status](https://travis-ci.org/yu-yamada/fluent-plugin-add.svg?branch=master)](https://travis-ci.org/yu-yamada/fluent-plugin-add)
 
+[![Gem Version](https://badge.fury.io/rb/fluent-plugin-add.svg)](https://badge.fury.io/rb/fluent-plugin-add)
+
 ## Installation
 
 
