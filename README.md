@@ -24,7 +24,7 @@
 
 ### Assuming following inputs are coming:
     test.aa: {"json":"dayo"}
-### then output bocomes as belows
+### then output becomes as belows
     debug.test.aa: {"json":"dayo", "hoge":"moge","hogehoge":"mogemoge"}
 
 ### AddFilter
