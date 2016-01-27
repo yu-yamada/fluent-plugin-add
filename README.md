@@ -13,7 +13,7 @@
 ### AddOutput
 
     <match test.**>
-      type add
+      @type add
       add_tag_prefix debug
       uuid true # optional 
       <pair>
@@ -31,8 +31,8 @@
 ### AddFilter
 
     <filter test.**>
-      type add
-      uuid true # optional 
+      @type add
+      uuid true # optional
       <pair>
         hoge moge
         hogehoge mogemoge
