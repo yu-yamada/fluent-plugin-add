@@ -1,6 +1,9 @@
+require 'securerandom'
+
 class Fluent::AddFilter < Fluent::Filter
   Fluent::Plugin.register_filter('add', self)
 
+  config_param :uuid, :bool, :default => false
   def initialize
     super
   end
@@ -22,6 +25,9 @@ class Fluent::AddFilter < Fluent::Filter
   def filter(tag, time, record)
     @add_hash.each do |k,v|
       record[k] = v
+    end
+    if @uuid
+      record['uuid'] = SecureRandom.uuid.upcase
     end
     record
   end
