@@ -17,6 +17,7 @@ class Fluent::AddFilter < Fluent::Filter
       element.name == 'pair'
     }.each do |pair|
       pair.each do | k,v|
+       pair.has_key?(k)  # suppress warnings about unused configuration
        @add_hash[k] = v
       end
     end
