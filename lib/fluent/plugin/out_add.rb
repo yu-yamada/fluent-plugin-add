@@ -1,7 +1,10 @@
 require 'securerandom'
+require 'fluent/plugin/output'
 
-class Fluent::AddOutput < Fluent::Output
+class Fluent::Plugin::AddOutput < Fluent::Plugin::Output
   Fluent::Plugin.register_output('add', self)
+
+  helpers :event_emitter
 
    # Define `router` method of v0.12 to support v0.10.57 or earlier
   unless method_defined?(:router)
@@ -29,16 +32,16 @@ class Fluent::AddOutput < Fluent::Output
         Proc.new {|tag| tag }
       end
     conf.elements.select {|element|
-      element.name == 'pair' 
+      element.name == 'pair'
     }.each do |pair|
       pair.each do | k,v|
        pair.has_key?(k) # suppress warnings about unused configuration
        @add_hash[k] = v
       end
-    end 
+    end
   end
 
-  def emit(tag, es, chain)
+  def process(tag, es)
     emit_tag = @tag_proc.call(tag)
 
     es.each do |time,record|
@@ -50,8 +53,6 @@ class Fluent::AddOutput < Fluent::Output
       end
       router.emit(emit_tag, time, record)
     end
-
-    chain.next
   end
 
 end
