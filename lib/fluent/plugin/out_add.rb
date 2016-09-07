@@ -6,9 +6,9 @@ class Fluent::Plugin::AddOutput < Fluent::Plugin::Output
 
   helpers :event_emitter
 
-  config_param :add_tag_prefix, :string, :default => 'greped'
-  config_param :uuid, :bool, :default => false
-  config_param :uuid_key, :string, :default => 'uuid'
+  config_param :add_tag_prefix, :string, default: 'greped'
+  config_param :uuid, :bool, default: false
+  config_param :uuid_key, :string, default: 'uuid'
 
   def initialize
     super

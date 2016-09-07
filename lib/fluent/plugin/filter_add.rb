@@ -4,8 +4,8 @@ require 'fluent/plugin/filter'
 class Fluent::Plugin::AddFilter < Fluent::Plugin::Filter
   Fluent::Plugin.register_filter('add', self)
 
-  config_param :uuid, :bool, :default => false
-  config_param :uuid_key, :string, :default => 'uuid'
+  config_param :uuid, :bool, default: false
+  config_param :uuid_key, :string, default: 'uuid'
 
   def initialize
     super
