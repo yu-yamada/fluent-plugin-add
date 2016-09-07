@@ -1,9 +1,8 @@
 require 'helper'
+require 'fluent/test/driver/filter'
 
 class AddFilterTest < Test::Unit::TestCase
   def setup
-    omit("Use Fluentd v0.12 or later.") unless defined?(Fluent::Filter)
-
     Fluent::Test.setup
   end
 
@@ -21,8 +20,8 @@ class AddFilterTest < Test::Unit::TestCase
     </pair>
   ]
 
-  def create_driver(conf = CONFIG, tag='test')
-    Fluent::Test::FilterTestDriver.new(Fluent::AddFilter, tag).configure(conf)
+  def create_driver(conf = CONFIG)
+    Fluent::Test::Driver::Filter.new(Fluent::Plugin::AddFilter).configure(conf)
   end
 
   def test_configure
@@ -34,31 +33,27 @@ class AddFilterTest < Test::Unit::TestCase
     d = create_driver
 
     time = Time.parse("2011-01-02 13:14:15 UTC").to_i
-    d.run do
-      d.filter("a" => 1)
+    d.run(default_tag: 'test') do
+      d.feed(time, "a" => 1)
     end
     mapped = {'hoge' => 'moge', 'hogehoge' => 'mogemoge'}
     expect = {"a" => 1}.merge(mapped)
-    assert_equal expect, d.filtered_as_array[0][2]
+    assert_equal [expect], d.filtered.map {|e| e.last }
   end
   def test_uu
     d = create_driver(CONFIG_UU)
 
-    d.run do
-      d.emit("a" => 1)
+    d.run(default_tag: 'test') do
+      d.feed("a" => 1)
     end
-    assert d.filtered_as_array[0][2].has_key?('uuid')
-
-    d.run
+    assert d.filtered.map {|e| e.last }.first.has_key?('uuid')
   end
   def test_uuid_key
     d = create_driver("#{CONFIG_UU}\nuuid_key test_uuid")
 
-    d.run do
-      d.emit("a" => 1)
+    d.run(default_tag: 'test') do
+      d.feed("a" => 1)
     end
-    assert d.filtered_as_array[0][2].has_key?('test_uuid')
-
-    d.run
+    assert d.filtered.map {|e| e.last }.first.has_key?('test_uuid')
   end
 end

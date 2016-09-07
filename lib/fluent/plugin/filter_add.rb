@@ -1,6 +1,7 @@
 require 'securerandom'
+require 'fluent/plugin/filter'
 
-class Fluent::AddFilter < Fluent::Filter
+class Fluent::Plugin::AddFilter < Fluent::Plugin::Filter
   Fluent::Plugin.register_filter('add', self)
 
   config_param :uuid, :bool, :default => false
@@ -34,4 +35,4 @@ class Fluent::AddFilter < Fluent::Filter
     end
     record
   end
-end if defined?(Fluent::Filter)
+end
