@@ -4,6 +4,8 @@ class Fluent::AddFilter < Fluent::Filter
   Fluent::Plugin.register_filter('add', self)
 
   config_param :uuid, :bool, :default => false
+  config_param :uuid_key, :string, :default => 'uuid'
+
   def initialize
     super
   end
@@ -28,7 +30,7 @@ class Fluent::AddFilter < Fluent::Filter
       record[k] = v
     end
     if @uuid
-      record['uuid'] = SecureRandom.uuid.upcase
+      record[@uuid_key] = SecureRandom.uuid.upcase
     end
     record
   end

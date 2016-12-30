@@ -10,6 +10,7 @@ class Fluent::AddOutput < Fluent::Output
 
   config_param :add_tag_prefix, :string, :default => 'greped'
   config_param :uuid, :bool, :default => false
+  config_param :uuid_key, :string, :default => 'uuid'
 
   def initialize
     super
@@ -45,7 +46,7 @@ class Fluent::AddOutput < Fluent::Output
         record[k] = v
       end
       if @uuid
-        record['uuid'] = SecureRandom.uuid.upcase
+        record[@uuid_key] = SecureRandom.uuid.upcase
       end
       router.emit(emit_tag, time, record)
     end

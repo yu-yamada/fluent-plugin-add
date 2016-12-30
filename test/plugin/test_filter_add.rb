@@ -51,4 +51,14 @@ class AddFilterTest < Test::Unit::TestCase
 
     d.run
   end
+  def test_uuid_key
+    d = create_driver("#{CONFIG_UU}\nuuid_key test_uuid")
+
+    d.run do
+      d.emit("a" => 1)
+    end
+    assert d.filtered_as_array[0][2].has_key?('test_uuid')
+
+    d.run
+  end
 end
