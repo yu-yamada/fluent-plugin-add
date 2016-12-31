@@ -13,8 +13,9 @@
 ### AddOutput
 
     <match test.**>
-      type add
+      @type add
       add_tag_prefix debug
+      uuid true # optional 
       <pair>
         hoge moge
         hogehoge mogemoge
@@ -25,12 +26,13 @@
 ### Assuming following inputs are coming:
     test.aa: {"json":"dayo"}
 ### then output becomes as belows
-    debug.test.aa: {"json":"dayo", "hoge":"moge","hogehoge":"mogemoge"}
+    debug.test.aa: {"json":"dayo", "hoge":"moge","hogehoge":"mogemoge","uuid":"427037E7-235B-4F6C-9975-15AAC75E56C5"}
 
 ### AddFilter
 
     <filter test.**>
-      type add
+      @type add
+      uuid true # optional
       <pair>
         hoge moge
         hogehoge mogemoge
@@ -41,7 +43,7 @@
 ### Assuming following inputs are coming:
     test.aa: {"json":"dayo"}
 ### then output bocomes as belows
-    debug.test.aa: {"json":"dayo", "hoge":"moge","hogehoge":"mogemoge"}
+    debug.test.aa: {"json":"dayo", "hoge":"moge","hogehoge":"mogemoge","uuid":"427037E7-235B-4F6C-9975-15AAC75E56C5"}
 
 ## Contributing
 

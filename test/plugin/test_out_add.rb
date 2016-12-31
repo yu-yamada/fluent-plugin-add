@@ -12,6 +12,13 @@ class AddOutputTest < Test::Unit::TestCase
       hogehoge mogemoge
     </pair>
   ]
+  CONFIG_UU = %[
+    uuid true
+    <pair>
+      hoge moge
+      hogehoge mogemoge
+    </pair>
+  ]
   
   def create_driver(conf = CONFIG, tag='test')
     Fluent::Test::OutputTestDriver.new(Fluent::AddOutput, tag).configure(conf)
@@ -20,12 +27,14 @@ class AddOutputTest < Test::Unit::TestCase
   def test_configure 
     d = create_driver
     assert_equal 'pre_hoge', d.instance.config["add_tag_prefix"] 
+
+    d = create_driver(CONFIG_UU)
+    assert d.instance.config["uuid"] 
   end
 
   def test_format
     d = create_driver
     
-    time = Time.parse("2011-01-02 13:14:15 UTC").to_i
     d.run do
       d.emit("a" => 1)
     end
@@ -33,6 +42,26 @@ class AddOutputTest < Test::Unit::TestCase
     assert_equal [
       {"a" => 1}.merge(mapped),
     ], d.records
+
+    d.run
+  end
+  def test_uu
+    d = create_driver(CONFIG_UU)
+    
+    d.run do
+      d.emit("a" => 1)
+    end
+    assert d.records[0].has_key?('uuid')
+
+    d.run
+  end
+  def test_uuid_key
+    d = create_driver("#{CONFIG_UU}\nuuid_key test_uuid")
+
+    d.run do
+      d.emit("a" => 1)
+    end
+    assert d.records[0].has_key?('test_uuid')
 
     d.run
   end

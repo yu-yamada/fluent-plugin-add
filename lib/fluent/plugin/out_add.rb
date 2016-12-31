@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class Fluent::AddOutput < Fluent::Output
   Fluent::Plugin.register_output('add', self)
 
@@ -7,6 +9,8 @@ class Fluent::AddOutput < Fluent::Output
   end
 
   config_param :add_tag_prefix, :string, :default => 'greped'
+  config_param :uuid, :bool, :default => false
+  config_param :uuid_key, :string, :default => 'uuid'
 
   def initialize
     super
@@ -28,6 +32,7 @@ class Fluent::AddOutput < Fluent::Output
       element.name == 'pair' 
     }.each do |pair|
       pair.each do | k,v|
+       pair.has_key?(k) # suppress warnings about unused configuration
        @add_hash[k] = v
       end
     end 
@@ -39,6 +44,9 @@ class Fluent::AddOutput < Fluent::Output
     es.each do |time,record|
       @add_hash.each do |k,v|
         record[k] = v
+      end
+      if @uuid
+        record[@uuid_key] = SecureRandom.uuid.upcase
       end
       router.emit(emit_tag, time, record)
     end
