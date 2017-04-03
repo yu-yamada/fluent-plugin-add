@@ -1,4 +1,5 @@
 require 'helper'
+require 'fluent/test/driver/output'
 
 class AddOutputTest < Test::Unit::TestCase
   def setup
@@ -19,50 +20,44 @@ class AddOutputTest < Test::Unit::TestCase
       hogehoge mogemoge
     </pair>
   ]
-  
-  def create_driver(conf = CONFIG, tag='test')
-    Fluent::Test::OutputTestDriver.new(Fluent::AddOutput, tag).configure(conf)
+
+  def create_driver(conf = CONFIG)
+    Fluent::Test::Driver::Output.new(Fluent::Plugin::AddOutput).configure(conf)
   end
 
-  def test_configure 
+  def test_configure
     d = create_driver
-    assert_equal 'pre_hoge', d.instance.config["add_tag_prefix"] 
+    assert_equal 'pre_hoge', d.instance.config["add_tag_prefix"]
 
     d = create_driver(CONFIG_UU)
-    assert d.instance.config["uuid"] 
+    assert d.instance.config["uuid"]
   end
 
   def test_format
     d = create_driver
-    
-    d.run do
-      d.emit("a" => 1)
+
+    d.run(default_tag: 'test') do
+      d.feed("a" => 1)
     end
     mapped = {'hoge' => 'moge', 'hogehoge' => 'mogemoge'}
     assert_equal [
       {"a" => 1}.merge(mapped),
-    ], d.records
-
-    d.run
+    ], d.events.map {|e| e.last }
   end
   def test_uu
     d = create_driver(CONFIG_UU)
-    
-    d.run do
-      d.emit("a" => 1)
-    end
-    assert d.records[0].has_key?('uuid')
 
-    d.run
+    d.run(default_tag: 'test') do
+      d.feed("a" => 1)
+    end
+    assert d.events.map{|e| e.last }.first.has_key?('uuid')
   end
   def test_uuid_key
     d = create_driver("#{CONFIG_UU}\nuuid_key test_uuid")
 
-    d.run do
-      d.emit("a" => 1)
+    d.run(default_tag: 'test') do
+      d.feed("a" => 1)
     end
-    assert d.records[0].has_key?('test_uuid')
-
-    d.run
+    assert d.events.map{|e| e.last}.first.has_key?('test_uuid')
   end
 end

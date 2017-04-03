@@ -1,16 +1,15 @@
 require 'securerandom'
+require 'fluent/plugin/output'
 
-class Fluent::AddOutput < Fluent::Output
+class Fluent::Plugin::AddOutput < Fluent::Plugin::Output
   Fluent::Plugin.register_output('add', self)
 
-   # Define `router` method of v0.12 to support v0.10.57 or earlier
-  unless method_defined?(:router)
-    define_method("router") { Fluent::Engine }
-  end
+  helpers :event_emitter
 
-  config_param :add_tag_prefix, :string, :default => 'greped'
-  config_param :uuid, :bool, :default => false
-  config_param :uuid_key, :string, :default => 'uuid'
+  config_param :add_tag_prefix, :string, default: 'greped',
+               deprecated: "use @label instead for event routing"
+  config_param :uuid, :bool, default: false
+  config_param :uuid_key, :string, default: 'uuid'
 
   def initialize
     super
@@ -29,16 +28,16 @@ class Fluent::AddOutput < Fluent::Output
         Proc.new {|tag| tag }
       end
     conf.elements.select {|element|
-      element.name == 'pair' 
+      element.name == 'pair'
     }.each do |pair|
       pair.each do | k,v|
        pair.has_key?(k) # suppress warnings about unused configuration
        @add_hash[k] = v
       end
-    end 
+    end
   end
 
-  def emit(tag, es, chain)
+  def process(tag, es)
     emit_tag = @tag_proc.call(tag)
 
     es.each do |time,record|
@@ -50,8 +49,6 @@ class Fluent::AddOutput < Fluent::Output
       end
       router.emit(emit_tag, time, record)
     end
-
-    chain.next
   end
 
 end
